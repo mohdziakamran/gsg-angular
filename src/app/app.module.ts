@@ -9,6 +9,10 @@ import { NavComponent } from './nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AgencydetailsComponent } from './agencydetails/agencydetails.component';
+import { BusdetailsComponent } from './busdetails/busdetails.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -16,14 +20,18 @@ import { SpinnerComponent } from './spinner/spinner.component';
     SigninComponent,
     DashboardComponent,
     NavComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    AgencydetailsComponent,
+    BusdetailsComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

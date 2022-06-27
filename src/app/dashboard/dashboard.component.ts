@@ -10,7 +10,7 @@ import { Emitters } from '../emitters/emitters';
 })
 export class DashboardComponent implements OnInit {
 
-
+  sideNavStatus=false;
   loader=false;
 
   constructor(

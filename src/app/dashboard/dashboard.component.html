@@ -1,3 +1,8 @@
 <app-spinner *ngIf="loader"></app-spinner>
-<app-nav></app-nav>
-<p>dashboard works!</p>
+<!-- <app-spinner ></app-spinner> -->
+<app-nav class="headernav" (sideNavoggled)="sideNavStatus = $event"></app-nav>
+<main>
+  <app-sidenav class="sidenav" [sideNavStatus]="sideNavStatus"
+  [ngClass]="{'app-side-nav-open': sideNavStatus}" ></app-sidenav>
+  <div class="display-area" [ngClass]="{'display-area-shrink': sideNavStatus}">Main Display Area</div>
+</main>
