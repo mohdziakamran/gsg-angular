@@ -10,31 +10,24 @@ export class AppComponent {
   title = 'gsg-angular';
 
   isLoggedIn=false;
+  isLoading=false;
 
-  loggedinEventListner(valueEmitted:boolean):void{
-    this.isLoggedIn=valueEmitted;
-  }
   onActivate() {
-    // elementRef.isLoggedIn.subscribe((event:any) => {
-    //     console.log(event);
-    // });
-
+    /** checking jwt exist in Local Storage or not  based on that - isloggedin or not */
     const token = localStorage.getItem("jwt");
     if (token !== null) {
       this.isLoggedIn=true;
     }
-
+    /** Settiner Method for isLoggedIn */
     Emitters.authEmitter.subscribe((auth:boolean)=>{
       console.log(auth);
       this.isLoggedIn=auth;
     })
+    /** Settiner Method for isLoading */
+    Emitters.spinnerEmitter.subscribe((loading:boolean)=>{
+      this.isLoading=loading;
+    })
   }
-    // eventListener():void{
-    //   Emitters.authEmitter.subscribe((auth:boolean)=>{
-    //       console.log(auth);
-    //       this.isLoggedIn=auth;
-    //     })
-    // }
 }
 
 

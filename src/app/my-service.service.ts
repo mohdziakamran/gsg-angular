@@ -45,7 +45,6 @@ export class MyServiceService {
   // ------------------------ Backend API calls ---------------------
 
   getAllAgencyBus():Observable<Bus[]>{
-
     const SubscribeObservable = new Observable<Bus[]>((observer)=>{
       this.httpClient.get<BusListResponse>(this.backendBaseUrl+`all-buses`,{
         headers: new HttpHeaders()
@@ -73,7 +72,29 @@ export class MyServiceService {
       // observer.next("some result jsvsvsbhdbvh")
     });
     return SubscribeObservable;
-    
+  }
+
+  signInRequest(formRawValue:any):Observable<any>{
+
+    const SubscribeObservable = new Observable<boolean>((observer)=>{
+      this.httpClient.post(environment.appUrl+'authenticate', formRawValue, {
+        withCredentials: true
+      }).subscribe({
+        next: (resp: any) => {
+          // console.log(JSON.parse(JSON.stringify(resp)).token);
+          localStorage.setItem('jwt', resp.token);
+          observer.next(true);
+        },
+        error: error => {
+          // console.log(error)
+          alert("Unable To Sign in, Please Check Your Credentials")
+          observer.next(false);
+        }
+      }
+      )
+      // observer.next("some result jsvsvsbhdbvh")
+    });
+    return SubscribeObservable;
   }
 
 }

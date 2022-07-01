@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Emitters } from '../emitters/emitters';
 import { Bus } from '../models/bus-list-response.model';
 import { MyServiceService } from '../my-service.service';
 import { NavComponent } from '../nav/nav.component';
@@ -10,7 +10,7 @@ import { NavComponent } from '../nav/nav.component';
   styleUrls: ['./buses.component.css']
 })
 export class BusesComponent implements OnInit {
-  loader = true;
+  // loader = true;
   // busList:string='';
   busList: Bus[] = [];
   emptyResult = false;
@@ -24,18 +24,20 @@ export class BusesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    Emitters.spinnerEmitter.emit(true);
     this.service.validateLoggedin();
     this.getBuses();
-
+    
   }
 
   getBuses() {
     this.service.getAllAgencyBus().subscribe((result) => {
       this.busList = result.concat(result);
       if (result.length === 0) this.emptyResult = true;
-
-      this.loader = false;
+      Emitters.spinnerEmitter.emit(false);
+      // this.loader = false;
     })
+    
 
   }
 

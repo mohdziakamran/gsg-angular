@@ -11,8 +11,6 @@ import { Emitters } from '../emitters/emitters';
 export class DashboardComponent implements OnInit {
 
 
-  loader=false;
-
   constructor(
     private http: HttpClient,
     private router:Router
@@ -21,7 +19,8 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.loader=true;
+    // this.loader=true;
+    Emitters.spinnerEmitter.emit(true);
 
     const token = localStorage.getItem("jwt");
     // console.log(token)
@@ -40,12 +39,15 @@ export class DashboardComponent implements OnInit {
       // })
       //temp soln
       // Emitters.authEmitter.emit(true);
-      this.loader=false;
+      // this.loader=false;
+      Emitters.spinnerEmitter.emit(false);
     }else{
       // Emitters.authEmitter.emit(false);
-      this.loader=false;
+      // this.loader=false;
+      Emitters.spinnerEmitter.emit(false);
       this.router.navigate(["/signin"])
     }
+    
     
   }
 

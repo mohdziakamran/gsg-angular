@@ -1,5 +1,6 @@
 
 <div>
+  <app-spinner *ngIf="isLoading"></app-spinner>
   <app-nav *ngIf="isLoggedIn"></app-nav>
   <router-outlet (activate)="onActivate()"></router-outlet>
   
