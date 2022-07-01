@@ -1,0 +1,286 @@
+<app-spinner *ngIf="loader"></app-spinner>
+<!-- <mat-spinner mode="indeterminate" *ngIf="loader"></mat-spinner> -->
+
+<div *ngIf="emptyResult">No Result Found</div>
+<div class="wholeDiv m-2">
+    <ul class="mr-3">
+        <li class="busitem mb-3 mr-3" *ngFor="let bus of busList">
+            <p>
+                <i class="fa fa-bus busnamestyle">
+                    {{bus.busName}}
+                    <span>
+                        - ({{bus.busNumber}})
+                    </span>
+                </i>
+            </p>
+
+            <mat-accordion>
+                <mat-expansion-panel hideToggle (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Start : {{bus.startBusStop}}
+                            <mat-panel-description class="justify-content-center">
+                                Schedule : {{getScheduleArr(bus)}}
+                            </mat-panel-description>
+                            End : {{bus.busRoutes[bus.busRoutes.length -1].busStop}}
+                        </mat-panel-title>
+
+                        <!-- <mat-panel-description>
+                            Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                        </mat-panel-description> -->
+                    </mat-expansion-panel-header>
+                    <hr>
+                    <p class="h5">Route</p>
+                    <ul>
+                        <li class="row">
+                            <p class="col routetablerow ">Departure Time</p>
+                            <p class="col routetablerow ">Bus Stops</p>
+                            <p class="col routetablerow ">Journey Time</p>
+                            <!-- <p class="col routetablerow">(Departure Time)</p> -->
+                        </li>
+                        <li class="row" *ngFor="let route of getRouteToDisplay(bus)">
+                            <p class="col routetablerow">{{route[0]}}</p>
+                            <p class="col routetablerow">{{route[1]}}</p>
+                            <p class="col routetablerow">{{route[2]}}hrs {{route[3]}}m</p>
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <p class="h5">Schedule</p>
+                    <div class="row ">
+                        <div class=" col schdeulestyle routetablerow " [ngClass]="{'specialSchedule': bus.sunday}">
+                            Sunday</div>
+                        <div class="col schdeulestyle routetablerow" [ngClass]="{'specialSchedule': bus.monday}">Monday
+                        </div>
+                        <div class="col schdeulestyle routetablerow" [ngClass]="{'specialSchedule': bus.tuesday}">
+                            Tuesday</div>
+                        <div class="col schdeulestyle routetablerow" [ngClass]="{'specialSchedule': bus.wednesday}">
+                            Wednesday</div>
+                        <div class="col schdeulestyle routetablerow" [ngClass]="{'specialSchedule': bus.thursday}">
+                            Thursday</div>
+                        <div class="col schdeulestyle routetablerow" [ngClass]="{'specialSchedule': bus.friday}">Friday
+                        </div>
+                        <div class="col schdeulestyle routetablerow" [ngClass]="{'specialSchedule': bus.saturday}">
+                            Saturday</div>
+                    </div>
+
+                    <hr>
+
+                    <p class="h5">Fare Chart</p>
+                    <div class="table-responsive">
+                        <table>
+                            <th class="routetablerow" *ngFor="let hdr of getTableHeaders(bus)">
+                                {{hdr}}
+                            </th>
+                            <tr *ngFor="let row of getTableData(bus)">
+                                <td class="routetablerow" [ngClass]="{'tablefcol': x==0 }"
+                                    *ngFor="let cell of row; index as x">
+                                    {{cell}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <hr>
+
+                    <button type="button" class="btn btn-primary pull-right" data-toggle="modal"
+                        data-target="#exampleModal" (click)="openModal(bus)">
+                        <i class="fa fa-edit"></i> EDIT Detail
+                    </button>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </li>
+    </ul>
+</div>
+
+<!-- Modal -->
+<div class="modal" [ngStyle]="{'display':displayStyle}" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 90%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLongTitle">Update Bus Details</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModel()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- ------------------------------------------------------------------- -->
+                <form action="">
+                    <ol>
+                        <li>
+                            <div class="row mb-3">
+                                <label for="inputbusname" class="col-sm-2 col-form-label">Bus Name</label>
+                                <div class="col-sm-8 m-2">
+                                    <input type="text" class="form-control" placeholder="Bus Name" name="inputbusname"
+                                        id="inputbusname" [ngModel]="modelObjectRead.busName"
+                                        (ngModelChange)="modelObjectWrite.busName=$event">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="row mb-3">
+                                <label for="inputBusNumber" class="col-sm-2 col-form-label">Bus Number</label>
+                                <div class="col-sm-8 m-2">
+                                    <input type="text" class="form-control" placeholder="Bus Number"
+                                        name="inputBusNumber" id="inputBusNumber" [ngModel]="modelObjectRead.busNumber"
+                                        (ngModelChange)="modelObjectWrite.busNumber=$event">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="row mb-3">
+                                <label for="inputTotalSeat" class="col-sm-2 col-form-label">Total Seats</label>
+                                <div class="col-sm-2 m-2">
+                                    <input type="number" class="form-control" placeholder="Total Seat"
+                                        name="inputTotalSeat" id="inputTotalSeat" [ngModel]="modelObjectRead.totalSeat"
+                                        (ngModelChange)="modelObjectWrite.totalSeat=$event">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="row mb-3">
+                                <label for="input-startBusStop" class="col-sm-2 col-form-label">StartBus Stop</label>
+                                <div class="col-sm-8 m-2">
+                                    <input type="text" class="form-control" placeholder="Bus Stop"
+                                        name="input-startBusStop" id="input-startBusStop"
+                                        [ngModel]="modelObjectRead.startBusStop"
+                                        (ngModelChange)="modelObjectWrite.startBusStop=$event">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="row mb-3">
+                                <label for="input-departureTime" class="col-sm-4 col-form-label">Departure Time from
+                                    Start</label>
+                                <div class="col-sm-3 m-2">
+                                    <input type="time" class="form-control" placeholder="HH:MM"
+                                        name="input-departureTime" id="input-departureTime"
+                                        [ngModel]="modelObjectRead.departureTime"
+                                        (ngModelChange)="modelObjectWrite.departureTime=$event">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="row mb-3">
+                                <label for="input-schedule" class="col-sm-4 col-form-label">Bus Weekly Schedule</label>
+                            </div>
+                        </li>
+                        <li>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" placeholder="Sunday"
+                                            name="input-sunday" id="input-sunday" [ngModel]="modelObjectRead.sunday"
+                                            (ngModelChange)="modelObjectWrite.sunday=$event">
+                                        <span class="m-2" style="font-size: 125%;">
+                                            Sunday
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" placeholder="Monday"
+                                            name="input-monday" id="input-monday" [ngModel]="modelObjectRead.monday"
+                                            (ngModelChange)="modelObjectWrite.monday=$event">
+                                        <span class="m-2" style="font-size: 125%;">
+                                            Monday
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" placeholder="Tuesday"
+                                            name="input-tuesday" id="input-tuesday" [ngModel]="modelObjectRead.tuesday"
+                                            (ngModelChange)="modelObjectWrite.tuesday=$event">
+                                        <span class="m-2" style="font-size: 125%;">
+                                            Tuesday
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" placeholder="Wednesday"
+                                            name="input-Wednesday" id="input-Wednesday"
+                                            [ngModel]="modelObjectRead.wednesday"
+                                            (ngModelChange)="modelObjectWrite.wednesday=$event">
+                                        <span class="m-2" style="font-size: 125%;">
+                                            Wednesday
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="input-thursday"
+                                            id="input-thursday" [ngModel]="modelObjectRead.thursday"
+                                            (ngModelChange)="modelObjectWrite.thursday=$event">
+                                        <span class="m-2" style="font-size: 125%;">
+                                            Thursday
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="input-friday"
+                                            id="input-friday" [ngModel]="modelObjectRead.friday"
+                                            (ngModelChange)="modelObjectWrite.friday=$event">
+                                        <span class="m-2" style="font-size: 125%;">
+                                            Friday
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="input-saturday"
+                                            id="input-saturday" [ngModel]="modelObjectRead.saturday"
+                                            (ngModelChange)="modelObjectWrite.saturday=$event">
+                                        <span class="m-2" style="font-size: 125%;">
+                                            Saturday
+                                        </span>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </li>
+
+                        <li>
+                            <div class="row mb-3">
+                                <label for="input-busRoutes" class="col-sm-4 col-form-label"> Bus Routes </label>
+                                <div>
+                                    <div class="col-sm-3 m-2">
+                                        <input type="time" class="form-control" placeholder="HH:MM"
+                                            name="input-busRoutes" id="input-busRoutes" 
+                                            [(ngModel)]="newBusStop">
+                                    </div>
+                                    <button class="col-sm-3 mr-2 mt-2 mb-2" (click)="addBusStopToRoute()">Add Bus
+                                        Stop</button>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="table-responsive">
+                                <table>
+                                    <th class="routetablerow" *ngFor="let hdr of getTableHeaders(modelObjectRead)">
+                                        {{hdr}}
+                                    </th>
+                                    <tr *ngFor="let row of getTableData(modelObjectRead); index as y">
+                                        <td class="routetablerow" [ngClass]="{'tablefcol': x==0 }"
+                                            *ngFor="let cell of row; index as x">
+                                            {{cell}}
+                                            <input *ngIf="cell != ''" type="number" class="form-control" placeholder="HH:MM"
+                                                name="input-departureTime" id="input-departureTime"
+                                                [ngModel]="cell"
+                                                (ngModelChange)="updateEventFareTableBox(x,y,$event)">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+
+                    </ol>
+                </form>
+                <!-- ------------------------------------------------------------------- -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="closeModel()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="saveUpdate()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

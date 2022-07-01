@@ -1,5 +1,6 @@
 
 <div>
-  <router-outlet></router-outlet>
+  <app-nav *ngIf="isLoggedIn"></app-nav>
+  <router-outlet (activate)="onActivate()"></router-outlet>
   
 </div>

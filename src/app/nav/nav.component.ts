@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Emitters } from '../emitters/emitters';
+import { MyServiceService } from '../my-service.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,7 +11,8 @@ import { Emitters } from '../emitters/emitters';
 export class NavComponent implements OnInit {
 
   constructor(
-    private router:Router
+    private router:Router,
+    private service:MyServiceService
   ) { }
 
   ngOnInit(): void {
@@ -18,8 +20,10 @@ export class NavComponent implements OnInit {
 
   signout():void{
     // this.authenticated=false;
-    localStorage.clear();
-    this.router.navigate(['/signin'])
+    // localStorage.clear();
+    // this.router.navigate(['/signin'])
+    // Emitters.authEmitter.emit(false);
+    this.service.signout();
   }
 
 }

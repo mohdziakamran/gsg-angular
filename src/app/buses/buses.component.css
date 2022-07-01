@@ -1,0 +1,85 @@
+.wholeDiv{
+    padding: 2%;
+}
+.busnamestyle{
+    font-size: large;
+}
+.busitem{
+    list-style-type: none;
+}
+.routetablerow{
+    text-align: center;
+}
+
+.schdeulestyle{
+    background-color: gray;
+    margin: 6px;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: large;
+}
+
+.specialSchedule{
+    background-color: green;
+    color: white;
+    
+}
+
+.scroll-container {
+    border: 2px solid silver;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.scroll-container.hide-scrollbar {
+    overflow: auto;
+}
+.scroll-container.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.scroll-container.show-scroll {
+    overflow: auto;
+}
+.scroll-container div {
+    white-space: nowrap;
+    background: #efefef;
+    border: 1px solid #efefef;
+    margin: 0.1rem;
+    padding: 0.2rem 0.7rem;
+}
+.scroll-container div:hover {
+    cursor: pointer;
+    border-color: #ccc;
+}
+
+.tablefcol{
+    font-weight: bold;
+    color: gray;
+}
+
+th{
+    color: gray;
+    width: 100px;
+    border: 1px black;
+}
+/* table {
+    border: 1px solid;
+  } */
+table{
+    width: 100%;
+}
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+.modal{
+    background: rgba(0,0,0, .5);
+}
+
+label { 
+    display: flex;
+    /* justify-content: center; */
+    font-size: 16px;
+    align-items: center;
+}
+li{
+    list-style-type: none
+}

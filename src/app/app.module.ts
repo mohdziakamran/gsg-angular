@@ -9,6 +9,9 @@ import { NavComponent } from './nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { BusesComponent } from './buses/buses.component';
+import { MaterialExampleModule } from 'src/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,14 +19,18 @@ import { SpinnerComponent } from './spinner/spinner.component';
     SigninComponent,
     DashboardComponent,
     NavComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    BusesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialExampleModule,
+    BrowserAnimationsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Emitters } from '../emitters/emitters';
 
 @Component({
@@ -13,8 +14,11 @@ import { Emitters } from '../emitters/emitters';
 export class SigninComponent implements OnInit {
 
   form!: FormGroup;
-  // private authenticated=false;
+  @Output() 
+  loggedinEvent:EventEmitter<boolean>= new EventEmitter<boolean>();
+  private authenticated=false;
   loader=false
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +39,7 @@ export class SigninComponent implements OnInit {
     // }
 
 
-
+    this.loggedinEvent.emit(this.authenticated);
 
     this.form = this.formBuilder.group({
       username: '',
@@ -57,14 +61,17 @@ export class SigninComponent implements OnInit {
 
     this.loader=true;
     // console.log(this.form.getRawValue())
-    this.http.post('http://localhost:8081/authenticate', this.form.getRawValue(), {
+    // this.http.post('http://localhost:8081/authenticate', this.form.getRawValue(), {
+    this.http.post(environment.appUrl+'authenticate', this.form.getRawValue(), {
       withCredentials: true
     }).subscribe({
       next: (resp: any) => {
         // console.log(JSON.parse(JSON.stringify(resp)).token);
         localStorage.setItem('jwt', resp.token);
-        // Emitters.authEmitter.emit(true);
+        Emitters.authEmitter.emit(true);
         this.loader=false;
+        this.authenticated=!this.authenticated;
+        this.loggedinEvent.emit(this.authenticated);
         this.router.navigate(['/'])
       },
       error: error => {
