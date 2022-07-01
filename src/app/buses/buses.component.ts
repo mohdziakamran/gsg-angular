@@ -39,32 +39,32 @@ export class BusesComponent implements OnInit {
 
   }
 
-  getRouteToDisplay(bus:Bus){
-    let resArr=[];
-    let [hour,minute]=bus.departureTime.split(':');
-    resArr.push([bus.departureTime,bus.startBusStop,'--','--']);
-    for( let route of bus.busRoutes){
-      const duration=route.travelDuration.split(':');
-      resArr.push(['',route.busStop, duration[0],duration[1] ]);
+  getRouteToDisplay(bus: Bus) {
+    let resArr = [];
+    // let [hour, minute] = bus.departureTime.split(':');
+    resArr.push([bus.departureTime, bus.startBusStop, '--', '--']);
+    for (let route of bus.busRoutes) {
+      const duration = route.travelDuration.split(':');
+      resArr.push(['', route.busStop, duration[0], duration[1]]);
     }
     return resArr
 
   }
 
-  getScheduleArr( bus:Bus){
-    let res='';
-    if(bus.sunday) res+='Sun-'
-    if(bus.monday) res+='Mon-'
-    if(bus.tuesday) res+='Tue-'
-    if(bus.wednesday) res+='Wed-'
-    if(bus.thursday) res+='Thu-'
-    if(bus.friday) res+='Fri-'
-    if(bus.saturday) res+='Sat-'
+  getScheduleArr(bus: Bus) {
+    let res = '';
+    if (bus.sunday) res += 'Sun-'
+    if (bus.monday) res += 'Mon-'
+    if (bus.tuesday) res += 'Tue-'
+    if (bus.wednesday) res += 'Wed-'
+    if (bus.thursday) res += 'Thu-'
+    if (bus.friday) res += 'Fri-'
+    if (bus.saturday) res += 'Sat-'
 
-    return res.substring(0,res.length-1);
+    return res.substring(0, res.length - 1);
   }
 
-  getWeekDays(){
+  getWeekDays() {
     return [
       'Sunday',
       'Monday',
@@ -76,36 +76,38 @@ export class BusesComponent implements OnInit {
     ]
   }
 
-  getTableHeaders(bus:Bus){
-    let hdrs=['Bus Stops'];
+  getTableHeaders(bus: Bus) {
+    let hdrs = ['Bus Stops'];
     // console.log(bus.busRoutes);
-    if(bus.busRoutes){
-      console.log('kuch bhi');
-      for( let route of bus.busRoutes){
+    if (bus.busRoutes != null) {
+      // console.log('kuch bhi' + bus.busRoutes.length);
+      for (let route of bus.busRoutes) {
         hdrs.push(route.busStop);
       }
     }
-      
-    
+
+
     return hdrs;
   }
 
-  getTableData(bus:Bus){
-    let rows=[];
-    const hdrs=this.getTableHeaders(bus);
-    const cols=[bus.startBusStop].concat(hdrs.slice(1));
-    for(let i=0;i<cols.length-1;i++){
-      let row=[];
-      for(let j=0;j<hdrs.length;j++){
-        if(j==0){
-          row.push(cols[i])
-        }else if(j-1 >= i){
-          row.push(bus.busRoutes[j-1].fares[i]);
-        }else{
-          row.push('');
+  getTableData(bus: Bus) {
+    let rows = [];
+    const hdrs = this.getTableHeaders(bus);
+    if (hdrs.length > 1 && bus.startBusStop != null) {
+      const cols = [bus.startBusStop].concat(hdrs.slice(1));
+      for (let i = 0; i < cols.length - 1; i++) {
+        let row = [];
+        for (let j = 0; j < hdrs.length; j++) {
+          if (j == 0) {
+            row.push(cols[i])
+          } else if (j - 1 >= i) {
+            row.push(bus.busRoutes[j - 1].fares[i]);
+          } else {
+            row.push('');
+          }
         }
+        rows.push(row);
       }
-      rows.push(row);
     }
     return rows;
   }
@@ -115,43 +117,44 @@ export class BusesComponent implements OnInit {
   // }
 
   displayStyle = "none";
-  modelObjectRead={} as Bus;
-  modelObjectWrite={} as Bus;
-  newBusStop='';
-  
+  modelObjectRead = {} as Bus;
+  modelObjectWrite = {} as Bus;
+  newBusStop = '';
+
   // openPopup(bus:Bus) {
   //   this.displayStyle = "block";
   // }
   closeModel() {
     this.displayStyle = "none";
-    this.newBusStop='';
-    this.modelObjectRead={} as Bus;
-    this.modelObjectWrite={} as Bus;
+    this.newBusStop = '';
+    this.modelObjectRead = {} as Bus;
+    this.modelObjectWrite = {} as Bus;
   }
-  openModal(bus:Bus) {
+  openModal(bus: Bus) {
     this.displayStyle = "block";
-    this.newBusStop='';
-    this.modelObjectRead=bus;
-    this.modelObjectWrite=JSON.parse(JSON.stringify(bus)) as Bus;
-    this.modelObjectWrite.busRoutes=[]
-    bus.busRoutes.forEach((br)=>{
+    this.newBusStop = '';
+    this.modelObjectRead = bus;
+    this.modelObjectWrite = JSON.parse(JSON.stringify(bus)) as Bus;
+    this.modelObjectWrite.busRoutes = []
+    bus.busRoutes.forEach((br) => {
       this.modelObjectWrite.busRoutes.push(JSON.parse(JSON.stringify(br)))
     })
   }
 
-  saveUpdate(){
+  saveUpdate() {
     //TODO
-    console.log('read data -' + this.modelObjectRead);
-    console.log('write data -' + this.modelObjectWrite);
+    console.log('read data -' + this.modelObjectRead.busRoutes[0].fares);
+    console.log('write data -' + this.modelObjectWrite.busRoutes[0].fares);
   }
 
-  addBusStopToRoute(){
+  addBusStopToRoute() {
     //TODO
-    console.log( this.newBusStop);
+    console.log(this.newBusStop);
   }
 
-  updateEventFareTableBox(x:number, y:number, val:number){
-    this.modelObjectWrite.busRoutes[x-1].fares[y]=val;
+  indexTracker(index: number, value: any) {
+    return index;
   }
+
 
 }
