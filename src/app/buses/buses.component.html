@@ -95,7 +95,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal" [ngStyle]="{'display':displayStyle}" tabindex="-1" role="dialog">
+<div class="modal" [ngStyle]="{'display':modalDisplayStyle}" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 90%;" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -113,8 +113,7 @@
                                 <label for="inputbusname" class="col-sm-2 col-form-label">Bus Name</label>
                                 <div class="col-sm-8 m-2 d-flex align-items-center justify-content-center">
                                     <input type="text" class="form-control" placeholder="Bus Name" name="inputbusname"
-                                        id="inputbusname" [ngModel]="modelObjectRead.busName"
-                                        (ngModelChange)="modelObjectWrite.busName=$event">
+                                        id="inputbusname" [(ngModel)]="modelObjectWrite.busName">
                                 </div>
                             </div>
                         </li>
@@ -124,8 +123,8 @@
                                 <label for="inputBusNumber" class="col-sm-2 col-form-label">Bus Number</label>
                                 <div class="col-sm-8 m-2 d-flex align-items-center justify-content-center">
                                     <input type="text" class="form-control" placeholder="Bus Number"
-                                        name="inputBusNumber" id="inputBusNumber" [ngModel]="modelObjectRead.busNumber"
-                                        (ngModelChange)="modelObjectWrite.busNumber=$event">
+                                        name="inputBusNumber" id="inputBusNumber"
+                                        [(ngModel)]="modelObjectWrite.busNumber">
                                 </div>
                             </div>
                         </li>
@@ -135,8 +134,8 @@
                                 <label for="inputTotalSeat" class="col-sm-2 col-form-label">Total Seats</label>
                                 <div class="col-sm-2 m-2  d-flex align-items-center justify-content-center">
                                     <input type="number" class="form-control" placeholder="Total Seat"
-                                        name="inputTotalSeat" id="inputTotalSeat" [ngModel]="modelObjectRead.totalSeat"
-                                        (ngModelChange)="modelObjectWrite.totalSeat=$event">
+                                        name="inputTotalSeat" id="inputTotalSeat"
+                                        [(ngModel)]="modelObjectWrite.totalSeat">
                                 </div>
                             </div>
                         </li>
@@ -147,8 +146,7 @@
                                 <div class="col-sm-8 m-2 d-flex align-items-center justify-content-center">
                                     <input type="text" class="form-control" placeholder="Bus Stop"
                                         name="input-startBusStop" id="input-startBusStop"
-                                        [ngModel]="modelObjectRead.startBusStop"
-                                        (ngModelChange)="modelObjectWrite.startBusStop=$event">
+                                        [(ngModel)]="modelObjectWrite.startBusStop">
                                 </div>
                             </div>
                         </li>
@@ -160,12 +158,12 @@
                                 <div class="col-sm-3 m-2 d-flex align-items-center justify-content-center">
                                     <input type="time" class="form-control" placeholder="HH:MM"
                                         name="input-departureTime" id="input-departureTime"
-                                        [ngModel]="modelObjectRead.departureTime"
-                                        (ngModelChange)="modelObjectWrite.departureTime=$event">
+                                        [(ngModel)]="modelObjectWrite.departureTime">
                                 </div>
                             </div>
                         </li>
 
+                        <!-- Bus Weekly Schedule Section -->
                         <li>
                             <div class="row mb-3">
                                 <label for="input-schedule" class="col-sm-4 col-form-label">Bus Weekly Schedule</label>
@@ -176,7 +174,7 @@
                                 <tr>
                                     <td>
                                         <input type="checkbox" class="form-check-input" placeholder="Sunday"
-                                            name="input-sunday" id="input-sunday" [ngModel]="modelObjectRead.sunday"
+                                            name="input-sunday" id="input-sunday" [ngModel]="modelObjectWrite.sunday"
                                             (ngModelChange)="modelObjectWrite.sunday=$event">
                                         <span class="m-2" style="font-size: 125%;">
                                             Sunday
@@ -184,7 +182,7 @@
                                     </td>
                                     <td>
                                         <input type="checkbox" class="form-check-input" placeholder="Monday"
-                                            name="input-monday" id="input-monday" [ngModel]="modelObjectRead.monday"
+                                            name="input-monday" id="input-monday" [ngModel]="modelObjectWrite.monday"
                                             (ngModelChange)="modelObjectWrite.monday=$event">
                                         <span class="m-2" style="font-size: 125%;">
                                             Monday
@@ -192,7 +190,7 @@
                                     </td>
                                     <td>
                                         <input type="checkbox" class="form-check-input" placeholder="Tuesday"
-                                            name="input-tuesday" id="input-tuesday" [ngModel]="modelObjectRead.tuesday"
+                                            name="input-tuesday" id="input-tuesday" [ngModel]="modelObjectWrite.tuesday"
                                             (ngModelChange)="modelObjectWrite.tuesday=$event">
                                         <span class="m-2" style="font-size: 125%;">
                                             Tuesday
@@ -201,7 +199,7 @@
                                     <td>
                                         <input type="checkbox" class="form-check-input" placeholder="Wednesday"
                                             name="input-Wednesday" id="input-Wednesday"
-                                            [ngModel]="modelObjectRead.wednesday"
+                                            [ngModel]="modelObjectWrite.wednesday"
                                             (ngModelChange)="modelObjectWrite.wednesday=$event">
                                         <span class="m-2" style="font-size: 125%;">
                                             Wednesday
@@ -209,7 +207,7 @@
                                     </td>
                                     <td>
                                         <input type="checkbox" class="form-check-input" name="input-thursday"
-                                            id="input-thursday" [ngModel]="modelObjectRead.thursday"
+                                            id="input-thursday" [ngModel]="modelObjectWrite.thursday"
                                             (ngModelChange)="modelObjectWrite.thursday=$event">
                                         <span class="m-2" style="font-size: 125%;">
                                             Thursday
@@ -217,7 +215,7 @@
                                     </td>
                                     <td>
                                         <input type="checkbox" class="form-check-input" name="input-friday"
-                                            id="input-friday" [ngModel]="modelObjectRead.friday"
+                                            id="input-friday" [ngModel]="modelObjectWrite.friday"
                                             (ngModelChange)="modelObjectWrite.friday=$event">
                                         <span class="m-2" style="font-size: 125%;">
                                             Friday
@@ -226,7 +224,7 @@
 
                                     <td>
                                         <input type="checkbox" class="form-check-input" name="input-saturday"
-                                            id="input-saturday" [ngModel]="modelObjectRead.saturday"
+                                            id="input-saturday" [ngModel]="modelObjectWrite.saturday"
                                             (ngModelChange)="modelObjectWrite.saturday=$event">
                                         <span class="m-2" style="font-size: 125%;">
                                             Saturday
@@ -238,36 +236,81 @@
                         </li>
 
                         <br>
-
+                        <!-- Bus Routes Section -->
                         <li>
                             <div class="row mb-3">
-                                <label for="input-busRoutes" class="col-sm-2 col-form-label"> Bus Routes </label>
-                                    <div class="col m-2 d-flex align-items-center justify-content-center">
-                                        <input type="text" class="form-control" placeholder="Bus Stop"
-                                            name="input-busRoutes" id="input-busRoutes" 
-                                            [(ngModel)]="newBusStop">
-                                    </div>
-                                    <button class="btn btn-primary col-sm-1 m-2" (click)="addBusStopToRoute()">+Add Stop</button>
-                                    <div class="col-sm-1"></div>
+                                <label for="input-busRoutes" class="col-sm-2 col-form-label h4"> Bus Routes </label>
+                                <div class="col m-2 d-flex align-items-center justify-content-center">
+                                    <input type="text" class="form-control" placeholder="Bus Stop"
+                                        name="input-busRoutes" id="input-busRoutes" [(ngModel)]="newBusStop">
+                                </div>
+                                <button class="btn btn-primary col-sm-1 m-2" (click)="addBusStopToRoute()">+Add
+                                    Stop</button>
+                                <div class="col-sm-1"></div>
                             </div>
                         </li>
 
+                        <br>
+                        <!-- Travel Duration Section -->
                         <li>
+                            <h3>
+                                Travel Duration from Start
+                            </h3>
                             <div class="table-responsive">
-                                <table>
-                                    <th class="routetablerow" *ngFor="let hdr of getTableHeaders(modelObjectRead)">
+                                <table class="travelDurationTable">
+                                    <th class="routetablerow" *ngFor="let hdr of getTableHeaders(modelObjectWrite)">
                                         {{hdr}}
                                     </th>
-                                    <tr *ngFor="let row of getTableData(modelObjectRead); index as y; trackBy:indexTracker;">
+                                    <tr>
+                                        <td class="routetablerow">
+                                            {{modelObjectWrite.startBusStop}}
+                                        </td>
+                                        <td class="routetablerow m-2"
+                                            *ngFor="let cell of modelObjectWrite.busRoutes; index as z;trackBy:indexTracker;">
+                                            <table>
+                                                <tr class="travelDurationTable">
+                                                    <td>
+                                                        <input type="number" class="col form-control inp-trv-dur" placeholder="HH"
+                                                            name="input-{{z}}-1" min=00 max=99 oninput="validity.valid||(value=00);"
+                                                            [ngModel]='cell.travelDuration.split(":")[0]'
+                                                            (ngModelChange)=editHH($event,z)>
+                                                    </td>
+                                                    <td>hrs:</td>
+                                                    <td>
+                                                        <input type="number" class="col form-control inp-trv-dur" placeholder="MM"
+                                                            name="input-{{z}}-2" min=00 max=59 oninput="validity.valid||(value=59);"
+                                                            [ngModel]='cell.travelDuration.split(":")[1]'
+                                                            (ngModelChange)=editMM($event,z)>
+                                                    </td>
+                                                    <td>m</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+
+                        <br>
+                        <!-- Fare Chart Section -->
+                        <li>
+                            <h3>
+                                Fare From Start
+                            </h3>
+                            <div class="table-responsive">
+                                <table class="faretable">
+                                    <th class="routetablerow" *ngFor="let hdr of getTableHeaders(modelObjectWrite)">
+                                        {{hdr}}
+                                    </th>
+                                    <tr
+                                        *ngFor="let row of getTableData(modelObjectWrite); index as y; trackBy:indexTracker;">
                                         <td class="routetablerow" [ngClass]="{'tablefcol': x==0 }"
                                             *ngFor="let cell of row; index as x;trackBy:indexTracker;">
                                             <!-- {{cell}} -->
-                                            <p *ngIf="x==0">{{cell}}</p>
+                                            <p *ngIf="x==0" class="td">{{cell}}</p>
                                             <!-- <p *ngIf="cell != '' && x!=0">{{getEventFareTableBox(x,y)}}</p> -->
-                                            <input *ngIf="cell != '' && x>0 && y>=0" type="number" class="form-control" placeholder="00"
-                                                name="input-{{x}}-{{y}}"  
-                                                [ngModel]=row[x]
-                                                (ngModelChange)="modelObjectWrite.busRoutes[x - 1].fares[y]=$event">
+                                            <input *ngIf=" x>0 && y>=0 && x>y" type="number" class="form-control "
+                                                placeholder="00" name="input-{{x}}-{{y}}" [(ngModel)]=row[x]>
                                         </td>
                                     </tr>
                                 </table>

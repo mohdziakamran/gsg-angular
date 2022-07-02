@@ -9,6 +9,11 @@
 }
 .routetablerow{
     text-align: center;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  align-content: center;
 }
 
 .schdeulestyle{
@@ -82,4 +87,19 @@ label {
 }
 li{
     list-style-type: none
+}
+
+.faretable td,th {
+  max-width:10rem; 
+  min-width:5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.travelDurationTable {
+    min-width: 100%;
+}
+
+.inp-trv-dur{
+    min-width: 5rem;
 }

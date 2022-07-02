@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Emitters } from '../emitters/emitters';
-import { Bus } from '../models/bus-list-response.model';
+import { Bus, BusRoute } from '../models/bus-list-response.model';
 import { MyServiceService } from '../my-service.service';
 import { NavComponent } from '../nav/nav.component';
 
@@ -24,8 +24,8 @@ export class BusesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    Emitters.spinnerEmitter.emit(true);
     this.service.validateLoggedin();
+    Emitters.spinnerEmitter.emit(true);
     this.getBuses();
     
   }
@@ -35,7 +35,6 @@ export class BusesComponent implements OnInit {
       this.busList = result.concat(result);
       if (result.length === 0) this.emptyResult = true;
       Emitters.spinnerEmitter.emit(false);
-      // this.loader = false;
     })
     
 
@@ -43,7 +42,6 @@ export class BusesComponent implements OnInit {
 
   getRouteToDisplay(bus: Bus) {
     let resArr = [];
-    // let [hour, minute] = bus.departureTime.split(':');
     resArr.push([bus.departureTime, bus.startBusStop, '--', '--']);
     for (let route of bus.busRoutes) {
       const duration = route.travelDuration.split(':');
@@ -80,14 +78,11 @@ export class BusesComponent implements OnInit {
 
   getTableHeaders(bus: Bus) {
     let hdrs = ['Bus Stops'];
-    // console.log(bus.busRoutes);
     if (bus.busRoutes != null) {
-      // console.log('kuch bhi' + bus.busRoutes.length);
       for (let route of bus.busRoutes) {
         hdrs.push(route.busStop);
       }
     }
-
 
     return hdrs;
   }
@@ -114,28 +109,20 @@ export class BusesComponent implements OnInit {
     return rows;
   }
 
-  // raise(){
-  //   alert("jshbvbshd")
-  // }
-
-  displayStyle = "none";
-  modelObjectRead = {} as Bus;
+  // Modal-Atributes
+  modalDisplayStyle = "none";
   modelObjectWrite = {} as Bus;
   newBusStop = '';
+  newBusStopTravelDuration='';
 
-  // openPopup(bus:Bus) {
-  //   this.displayStyle = "block";
-  // }
   closeModel() {
-    this.displayStyle = "none";
+    this.modalDisplayStyle = "none";
     this.newBusStop = '';
-    this.modelObjectRead = {} as Bus;
     this.modelObjectWrite = {} as Bus;
   }
   openModal(bus: Bus) {
-    this.displayStyle = "block";
+    this.modalDisplayStyle = "block";
     this.newBusStop = '';
-    this.modelObjectRead = bus;
     this.modelObjectWrite = JSON.parse(JSON.stringify(bus)) as Bus;
     this.modelObjectWrite.busRoutes = []
     bus.busRoutes.forEach((br) => {
@@ -143,20 +130,52 @@ export class BusesComponent implements OnInit {
     })
   }
 
-  saveUpdate() {
-    //TODO
-    console.log('read data -' + this.modelObjectRead.busRoutes[0].fares);
-    console.log('write data -' + this.modelObjectWrite.busRoutes[0].fares);
-  }
 
   addBusStopToRoute() {
-    //TODO
-    console.log(this.newBusStop);
+    //***validate
+    const found = this.getTableHeaders(this.modelObjectWrite).find((element) => {
+      return element.toLowerCase() === this.newBusStop.toLowerCase();
+    });
+    if(this.newBusStop == '' ||  found !== undefined || 
+      this.newBusStop.toLowerCase() == this.modelObjectWrite.startBusStop.toLowerCase()){
+      alert('Please Give New Bus Stop Name')
+      return;
+    }
+
+    //***add routes  */
+    this.modelObjectWrite.busRoutes.push({
+      busStop:this.newBusStop,
+      travelDuration:this.newBusStopTravelDuration,
+      fares:[]
+    } as BusRoute)
+    this.newBusStop = ''
   }
 
   indexTracker(index: number, value: any) {
     return index;
   }
+  editHH(event:any,z:number){
+    const tvd=this.modelObjectWrite.busRoutes[z].travelDuration.split(":");
+    if(event.length ==1) event='0'+event
+    this.modelObjectWrite.busRoutes[z].travelDuration = event+":"+tvd[1];
 
+    // console.log(this.modelObjectWrite.busRoutes);
+  }
+  editMM(event:any,z:number){
+    const tvd=this.modelObjectWrite.busRoutes[z].travelDuration.split(":");
+    if(event<10) event='0'+event
+    this.modelObjectWrite.busRoutes[z].travelDuration = tvd[0]+":"+event;
+
+    // console.log(this.modelObjectWrite.busRoutes);
+  }
+
+  saveUpdate() {
+    //TODO
+    this.modalDisplayStyle = "none";
+    //***validate
+    // API call to save Update
+    window.location.reload();
+    
+  }
 
 }

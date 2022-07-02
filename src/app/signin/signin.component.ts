@@ -33,6 +33,7 @@ export class SigninComponent implements OnInit {
       this.router.navigate(["/"]);
       return;
     }
+    Emitters.spinnerEmitter.emit(false)
   }
 
   /**
