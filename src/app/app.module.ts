@@ -12,7 +12,6 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { BusesComponent } from './buses/buses.component';
 import { MaterialExampleModule } from 'src/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AddBusComponent } from './add-bus/add-bus.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +20,7 @@ import { AddBusComponent } from './add-bus/add-bus.component';
     DashboardComponent,
     NavComponent,
     SpinnerComponent,
-    BusesComponent,
-    AddBusComponent
+    BusesComponent
   ],
   imports: [
     BrowserModule,

@@ -120,7 +120,7 @@ export class BusesComponent implements OnInit {
     this.newBusStop = '';
     this.modelObjectWrite = {} as Bus;
   }
-  openModal(bus: Bus) {
+  openUpdateBusModal(bus: Bus) {
     this.modalDisplayStyle = "block";
     this.newBusStop = '';
     this.modelObjectWrite = JSON.parse(JSON.stringify(bus)) as Bus;
@@ -130,9 +130,28 @@ export class BusesComponent implements OnInit {
     })
   }
 
+  openNewBusModal() {
+    this.modalDisplayStyle = "block";
+    this.newBusStop = '';
+    this.modelObjectWrite = {} as Bus;
+    // this.modelObjectWrite = JSON.parse(JSON.stringify(bus)) as Bus;
+    // this.modelObjectWrite.busRoutes = []
+    // bus.busRoutes.forEach((br) => {
+    //   this.modelObjectWrite.busRoutes.push(JSON.parse(JSON.stringify(br)))
+    // })
+  }
+
 
   addBusStopToRoute() {
     //***validate
+
+    if(this.modelObjectWrite.busRoutes ==undefined ){
+      this.modelObjectWrite.busRoutes=[];
+    } 
+    if(this.modelObjectWrite.startBusStop == undefined){
+      alert('Please Add Start Bus Stop');
+      return;
+    }
     const found = this.getTableHeaders(this.modelObjectWrite).find((element) => {
       return element.toLowerCase() === this.newBusStop.toLowerCase();
     });
@@ -173,7 +192,7 @@ export class BusesComponent implements OnInit {
     //TODO
     this.modalDisplayStyle = "none";
     //***validate
-    // API call to save Update
+    //*** API call to save Update
     window.location.reload();
     
   }
