@@ -1,8 +1,8 @@
 <!-- <app-spinner *ngIf="loader"></app-spinner> -->
 <div class="text-center">
     <main class="form-signin w-100 m-auto">
-        <form [formGroup]="form" (submit)="submit()">
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <form [formGroup]="loginForm" (submit)="submit()">
+            <h1 class="h3 mb-3 fw-normal">Please Login</h1>
 
             <div class="form-floating">
                 <input formControlName="username" class="form-control" id="floatingInput" placeholder="AB123456" required>
@@ -13,7 +13,8 @@
                 <label for="floatingPassword">Password</label>
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
         </form>
+        <a routerLink="/home">Go Home</a>
     </main>
 </div>

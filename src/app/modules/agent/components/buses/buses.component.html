@@ -1,8 +1,9 @@
 <!-- <app-spinner *ngIf="loader"></app-spinner> -->
 <!-- <mat-spinner mode="indeterminate" *ngIf="loader"></mat-spinner> -->
 
+
 <div class="d-flex justify-content-center">
-    <button class="btn btn-primary" 
+    <button class="btn btn-primary m-3" 
     style="text-align: center; width: 95%;"
     (click)="openNewBusModal()"
     >Add New Bus</button>
@@ -11,8 +12,8 @@
 <div *ngIf="emptyResult">No Result Found</div>
 
 <div class="wholeDiv m-2">
-    <ul class="mr-3" style="padding:0px;">
-        <li class="busitem mb-3 mr-3" *ngFor="let bus of busList">
+    <ul style="padding:0px;list-style: none">
+        <li class="busitem m-3" *ngFor="let bus of busList">
             <p>
                 <i class="fa fa-bus busnamestyle">
                     {{bus.busName}}

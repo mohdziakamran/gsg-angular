@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  appUrl: 'http://localhost:8081/'
+  appUrl: 'http://localhost:8081/',
+  allBusUrl: 'all-buses',
+  loginUrl: 'authenticate'
 };
 
 /*

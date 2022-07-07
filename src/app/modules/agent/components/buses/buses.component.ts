@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Emitters } from '../emitters/emitters';
-import { Bus, BusRoute } from '../models/bus-list-response.model';
-import { MyServiceService } from '../my-service.service';
-import { NavComponent } from '../nav/nav.component';
+import { Emitters } from 'src/app/emitters/emitters';
+// import { Bus, BusRoute } from 'src/app/models/bus-list-response.model';
+// import { MyServiceService } from 'src/app/my-service.service';
+import { AgentService } from '../../agent.service';
+import { Bus, BusRoute } from '../../models/bus-list-response.model';
 
 @Component({
   selector: 'app-buses',
@@ -19,20 +20,17 @@ export class BusesComponent implements OnInit {
 
 
   constructor(
-    private service: MyServiceService,
+    private agentService:AgentService,
   ) { }
 
 
   ngOnInit(): void {
-    this.service.validateLoggedin();
-    Emitters.spinnerEmitter.emit(true);
     this.getBuses();
-    
   }
 
   getBuses() {
-    this.service.getAllAgencyBus().subscribe((result) => {
-      this.busList = result.concat(result);
+    this.agentService.getAllAgencyBus().subscribe((result) => {
+      this.busList = result;
       if (result.length === 0) this.emptyResult = true;
       Emitters.spinnerEmitter.emit(false);
     })
